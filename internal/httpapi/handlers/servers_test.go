@@ -16,6 +16,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	agentregistryv1alpha1 "github.com/agentregistry-dev/agentregistry/api/v1alpha1"
+	"github.com/agentregistry-dev/agentregistry/internal/config"
 )
 
 func setupTestClient(t *testing.T) client.Client {
@@ -53,7 +54,7 @@ func TestServerHandler_CreateServer(t *testing.T) {
 
 	// Verify the server was created in the fake client
 	created := &agentregistryv1alpha1.MCPServerCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "my-test-server-1-0-0"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "my-test-server-1-0-0", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	assert.Equal(t, "My Test Server", created.Spec.Title)
 }

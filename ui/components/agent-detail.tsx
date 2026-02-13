@@ -127,105 +127,101 @@ export function AgentDetail({ agent, onClose }: AgentDetailProps) {
         </Button>
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-start gap-4 flex-1">
-            <div className="w-16 h-16 rounded bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
-              <Bot className="h-8 w-8 text-primary" />
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 mb-10 pb-8 border-b border-primary/10">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 flex-1">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/10">
+              <Bot className="h-12 w-12 text-primary" />
             </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2 flex-wrap">
-                <h1 className="text-3xl font-bold">{agentData.name}</h1>
-                {agentData.agentType && (
-                  <Badge variant={agentData.agentType === 'Declarative' ? 'default' : 'secondary'} className="text-sm">
-                    {agentData.agentType}
-                  </Badge>
-                )}
-                {agentData.framework && (
-                  <Badge variant="outline" className="text-sm">
-                    {agentData.framework}
-                  </Badge>
-                )}
-                {agentData.language && (
-                  <Badge variant="secondary" className="text-sm">
-                    {agentData.language}
-                  </Badge>
-                )}
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-3 mb-3 flex-wrap">
+                <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60 uppercase">
+                  {agentData.name}
+                </h1>
+                <div className="flex gap-2">
+                  {agentData.agentType && (
+                    <Badge variant={agentData.agentType === 'Declarative' ? 'default' : 'secondary'} className="text-xs font-bold tracking-wider uppercase px-3 py-1">
+                      {agentData.agentType}
+                    </Badge>
+                  )}
+                  {official?.isLatest && (
+                    <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20 text-xs font-bold tracking-wider uppercase px-3 py-1">
+                      Latest
+                    </Badge>
+                  )}
+                </div>
               </div>
               {agentData.description && (
-                <p className="text-muted-foreground">{agentData.description}</p>
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto md:mx-0 italic border-l-4 border-primary/20 pl-4 py-1">
+                  {agentData.description}
+                </p>
               )}
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-5 w-5" />
-            </Button>
+          <div className="flex flex-col gap-3">
+             <Button variant="outline" className="gap-2 h-11 px-6 font-bold uppercase tracking-wide border-primary/20 hover:border-primary transition-all duration-300">
+               <Globe className="h-4 w-4" />
+               View Specs
+             </Button>
+             <Button variant="default" className="gap-2 h-11 px-6 font-bold uppercase tracking-wide shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all duration-300">
+               <Activity className="h-4 w-4" />
+               Live Status
+             </Button>
           </div>
         </div>
 
-        {/* Quick Info */}
-        <div className="flex flex-wrap gap-3 mb-6 text-sm">
+        {/* Quick Info Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {owner && (
-            <div className="flex items-center gap-2 px-3 py-2 bg-primary/10 rounded-md border border-primary/20">
-              <BadgeCheck className="h-3.5 w-3.5 text-primary" />
-              <span className="text-muted-foreground">Owner:</span>
-              <span className="font-medium">{owner}</span>
+            <div className="group flex items-center gap-3 px-4 py-4 bg-primary/5 rounded-xl border border-primary/10 hover:bg-primary/10 transition-all duration-300">
+              <div className="p-2 bg-primary/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                <BadgeCheck className="h-5 w-5 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Publisher</p>
+                <p className="font-bold truncate text-foreground">{owner}</p>
+              </div>
             </div>
           )}
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-md">
-            <Tag className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-muted-foreground">Version:</span>
-            <span className="font-medium">{agentData.version}</span>
+          <div className="group flex items-center gap-3 px-4 py-4 bg-muted/30 rounded-xl border border-border/50 hover:bg-muted/50 transition-all duration-300">
+            <div className="p-2 bg-muted rounded-lg group-hover:scale-110 transition-transform duration-300">
+              <Tag className="h-5 w-5 text-muted-foreground" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">Version</p>
+              <p className="font-bold text-foreground">v{agentData.version}</p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-md">
-            <Circle className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-muted-foreground">Status:</span>
-            <span className="font-medium">{agentData.status || official?.status || 'unknown'}</span>
+          <div className="group flex items-center gap-3 px-4 py-4 bg-muted/30 rounded-xl border border-border/50 hover:bg-muted/50 transition-all duration-300">
+            <div className="p-2 bg-muted rounded-lg group-hover:scale-110 transition-transform duration-300">
+              <Circle className="h-5 w-5 text-muted-foreground" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">Status</p>
+              <p className="font-bold text-foreground capitalize">{agentData.status || official?.status || 'Active'}</p>
+            </div>
           </div>
 
           {deployment && (
-            <div className={`flex items-center gap-2 px-3 py-2 rounded-md ${deployment.ready ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
-              {deployment.ready ? (
-                <CheckCircle2 className="h-3.5 w-3.5 text-green-600" />
-              ) : (
-                <XCircle className="h-3.5 w-3.5 text-red-600" />
-              )}
-              <span className="text-muted-foreground">Deployment:</span>
-              <span className={`font-medium ${deployment.ready ? 'text-green-600' : 'text-red-600'}`}>
-                {deployment.ready ? 'Running' : 'Not Ready'}
-              </span>
-              {deployment.namespace && (
-                <span className="text-xs text-muted-foreground">({deployment.namespace})</span>
-              )}
-            </div>
-          )}
-
-          {modelConfigRef && (
-            <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-md">
-              <Settings2 className="h-3.5 w-3.5 text-muted-foreground" />
-              <span className="text-muted-foreground">Model Config:</span>
-              <span className="font-medium font-mono">{modelConfigRef}</span>
-            </div>
-          )}
-
-          {official?.publishedAt && (
-            <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-md">
-              <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-              <span className="text-muted-foreground">Published:</span>
-              <span className="font-medium">{formatDate(official.publishedAt)}</span>
-            </div>
-          )}
-
-          {official?.updatedAt && (
-            <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-md">
-              <Clock className="h-3.5 w-3.5 text-muted-foreground" />
-              <span className="text-muted-foreground">Updated:</span>
-              <span className="font-medium">{formatDate(official.updatedAt)}</span>
+            <div className={`group flex items-center gap-3 px-4 py-4 rounded-xl border transition-all duration-300 ${deployment.ready ? 'bg-green-500/5 border-green-500/10 hover:bg-green-500/10' : 'bg-red-500/5 border-red-500/10 hover:bg-red-500/10'}`}>
+              <div className={`p-2 rounded-lg group-hover:scale-110 transition-transform duration-300 ${deployment.ready ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                {deployment.ready ? (
+                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                ) : (
+                  <XCircle className="h-5 w-5 text-red-600" />
+                )}
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Deployment</p>
+                <p className={`font-bold truncate ${deployment.ready ? 'text-green-600' : 'text-red-600'}`}>
+                  {deployment.ready ? 'Operational' : 'Issues Detected'}
+                </p>
+              </div>
             </div>
           )}
         </div>
+
 
         {/* Detailed Information Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -635,104 +631,145 @@ export function AgentDetail({ agent, onClose }: AgentDetailProps) {
             </TabsContent>
           )}
 
-          <TabsContent value="technical" className="space-y-4">
-            {/* Repository */}
-            {agentData.repository?.url && (
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <Github className="h-5 w-5" />
-                  Source Repository
-                </h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">URL</p>
-                    <a
-                      href={agentData.repository.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-primary hover:underline break-all"
-                    >
-                      <span className="font-mono text-sm">{agentData.repository.url}</span>
-                      <ExternalLink className="h-4 w-4 flex-shrink-0" />
-                    </a>
+          <TabsContent value="technical" className="space-y-6 pt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Repository & Source */}
+              {agentData.repository?.url && (
+                <Card className="p-6 bg-gradient-to-br from-card to-muted/20 border-primary/10 shadow-sm relative overflow-hidden group">
+                  <div className="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Github className="h-12 w-12" />
                   </div>
-                  {agentData.repository.source && (
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary/70 mb-5 flex items-center gap-2">
+                    <Github className="h-4 w-4" />
+                    Source Control
+                  </h3>
+                  <div className="space-y-4 relative z-10">
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Source</p>
-                      <p className="font-medium">{agentData.repository.source}</p>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Repository URL</p>
+                      <div className="flex items-center gap-2 p-3 bg-background/50 rounded-lg border border-primary/5 hover:border-primary/20 transition-colors">
+                        <code className="text-xs font-mono text-primary truncate flex-1">{agentData.repository.url}</code>
+                        <a
+                          href={agentData.repository.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1.5 hover:bg-primary/10 rounded-md transition-colors"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
                     </div>
-                  )}
-                </div>
-              </Card>
-            )}
+                    {agentData.repository.source && (
+                      <div className="flex items-center justify-between pt-2">
+                        <span className="text-xs text-muted-foreground">Provider</span>
+                        <Badge variant="outline" className="font-bold uppercase text-[10px] tracking-tighter px-2">
+                          {agentData.repository.source}
+                        </Badge>
+                      </div>
+                    )}
+                  </div>
+                </Card>
+              )}
 
-            {/* Container Image */}
-            {agentData.image && (
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <Container className="h-5 w-5" />
-                  Container Image
-                </h3>
-                <div className="bg-muted p-4 rounded-lg">
-                  <code className="text-sm break-all">{agentData.image}</code>
-                </div>
-              </Card>
-            )}
+              {/* Container Infrastructure */}
+              {agentData.image && (
+                <Card className="p-6 bg-gradient-to-br from-card to-muted/20 border-primary/10 shadow-sm group">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary/70 mb-5 flex items-center gap-2">
+                    <Container className="h-4 w-4" />
+                    Deployment Artifact
+                  </h3>
+                  <div>
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Container Image</p>
+                    <div className="p-4 bg-zinc-950 rounded-xl border border-white/5 relative group-hover:border-primary/20 transition-all duration-500">
+                      <div className="flex items-start gap-3">
+                        <Box className="h-4 w-4 text-primary/40 mt-1" />
+                        <code className="text-xs font-mono text-zinc-300 break-all leading-relaxed">
+                          {agentData.image}
+                        </code>
+                      </div>
+                      <div className="absolute top-2 right-2">
+                        <Badge variant="outline" className="text-[9px] bg-primary/10 text-primary border-primary/20 font-mono">
+                          LATEST
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              )}
+            </div>
 
-            {/* Website & Telemetry */}
+            {/* Endpoints Grid */}
             {(agentData.websiteUrl || agentData.telemetryEndpoint) && (
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Endpoints</h3>
-                <div className="space-y-3">
+              <Card className="p-6 bg-gradient-to-br from-card to-muted/10 border-primary/5 shadow-sm">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-primary/70 mb-5 flex items-center gap-2">
+                  <Network className="h-4 w-4" />
+                  Service Endpoints
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {agentData.websiteUrl && (
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Website</p>
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Public Website</p>
                       <a
                         href={agentData.websiteUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-primary hover:underline break-all"
+                        className="flex items-center gap-3 p-3 bg-background/40 hover:bg-background/80 rounded-lg border border-border/50 group transition-all"
                       >
-                        <span className="font-mono text-sm">{agentData.websiteUrl}</span>
-                        <ExternalLink className="h-4 w-4 flex-shrink-0" />
+                        <Globe className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <span className="text-xs font-mono truncate flex-1">{agentData.websiteUrl}</span>
+                        <ExternalLink className="h-3 w-3 opacity-40" />
                       </a>
                     </div>
                   )}
                   {agentData.telemetryEndpoint && (
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Telemetry Endpoint</p>
-                      <code className="text-sm break-all">{agentData.telemetryEndpoint}</code>
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Telemetry Sink</p>
+                      <div className="flex items-center gap-3 p-3 bg-background/40 rounded-lg border border-border/50">
+                        <Activity className="h-4 w-4 text-primary/40" />
+                        <code className="text-xs font-mono truncate flex-1">{agentData.telemetryEndpoint}</code>
+                      </div>
                     </div>
                   )}
                 </div>
               </Card>
             )}
 
-            {/* Timestamps */}
-            <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Timestamps</h3>
-              <div className="space-y-3">
-                {agentData.updatedAt && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Last Updated (Local)</span>
-                    <span className="font-medium font-mono text-sm">{formatDate(agentData.updatedAt)}</span>
+            {/* Lifecycle Timestamps */}
+            <Card className="p-6 border-primary/5 shadow-sm bg-muted/5">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-primary/70 mb-6 flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                Registry Lifecycle
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                {/* Visual Connector Line (hidden on mobile) */}
+                <div className="hidden md:block absolute top-[2.25rem] left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+                
+                <div className="relative z-10 text-center md:text-left">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto md:mx-0 mb-3 shadow-sm">
+                    <Calendar className="h-4 w-4 text-primary/60" />
                   </div>
-                )}
-                {official?.publishedAt && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Published (Registry)</span>
-                    <span className="font-medium font-mono text-sm">{formatDate(official.publishedAt)}</span>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1">Created</p>
+                  <p className="text-sm font-mono font-bold">{official?.publishedAt ? formatDate(official.publishedAt) : '—'}</p>
+                </div>
+
+                <div className="relative z-10 text-center md:text-left">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto md:mx-0 mb-3 shadow-sm">
+                    <Activity className="h-4 w-4 text-primary/60" />
                   </div>
-                )}
-                {official?.updatedAt && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Updated (Registry)</span>
-                    <span className="font-medium font-mono text-sm">{formatDate(official.updatedAt)}</span>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1">Last Update</p>
+                  <p className="text-sm font-mono font-bold">{agentData.updatedAt ? formatDate(agentData.updatedAt) : '—'}</p>
+                </div>
+
+                <div className="relative z-10 text-center md:text-left">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto md:mx-0 mb-3 shadow-sm">
+                    <BadgeCheck className="h-4 w-4 text-primary/60" />
                   </div>
-                )}
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1">Registry Sync</p>
+                  <p className="text-sm font-mono font-bold">{official?.updatedAt ? formatDate(official.updatedAt) : 'Synced'}</p>
+                </div>
               </div>
             </Card>
           </TabsContent>
+
 
           <TabsContent value="raw">
             <Card className="p-6">

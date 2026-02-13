@@ -1,0 +1,35 @@
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: sourcebot-mcp
+  namespace: agentregistry
+  labels:
+    agentregistry.dev/resource-uid: "sourcebot-mcp-v1"
+    agentregistry.dev/resource-name: "sourcebot-mcp"
+    agentregistry.dev/resource-version: "latest"
+    agentregistry.dev/resource-environment: "dev"
+    agentregistry.dev/resource-source: "manual"
+spec:
+  name: "sourcebot"
+  version: "latest"
+  title: "Sourcebot MCP Server"
+  description: "Enables LLM agents to fetch code context across repositories indexed by Sourcebot (Supports GitHub, GitLab, Bitbucket, etc.)."
+  websiteUrl: "https://sourcebot.dev"
+  repository:
+    url: "https://github.com/sourcebot-dev/sourcebot"
+    source: github
+  packages:
+    - registryType: npm
+      identifier: "@sourcebot/mcp"
+      version: "latest"
+      transport:
+        type: stdio
+  tools:
+    - name: "search_code"
+      description: "Searches for code that matches the provided search query."
+    - name: "list_repos"
+      description: "Lists repositories indexed by Sourcebot."
+    - name: "read_file"
+      description: "Reads the source code for a given file."
+    - name: "ask_codebase"
+      description: "Ask a natural language question about the codebase."

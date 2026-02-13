@@ -13,6 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	agentregistryv1alpha1 "github.com/agentregistry-dev/agentregistry/api/v1alpha1"
+	"github.com/agentregistry-dev/agentregistry/internal/config"
 )
 
 func setupAgentTestClient(t *testing.T) client.Client {
@@ -49,7 +50,7 @@ func TestAgentHandler_CreateAgent(t *testing.T) {
 
 	// Verify the CR was persisted
 	created := &agentregistryv1alpha1.AgentCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "my-agent-1-0-0"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "my-agent-1-0-0", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	assert.Equal(t, "My Agent", created.Spec.Title)
 	assert.Equal(t, "registry.io/myagent:latest", created.Spec.Image)

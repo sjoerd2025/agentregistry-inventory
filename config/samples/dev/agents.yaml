@@ -48,3 +48,19 @@ spec:
   framework: langgraph
   language: python
   modelProvider: anthropic
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: sourcebot-dev-v0.1.0
+  namespace: agentregistry
+  labels:
+    environment: dev
+spec:
+  name: sourcebot-dev
+  version: "0.1.0"
+  title: "Sourcebot (dev)"
+  description: "Expert agent for Sourcebot development"
+  framework: genkit
+  language: typescript
+  modelProvider: google

@@ -13,6 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	agentregistryv1alpha1 "github.com/agentregistry-dev/agentregistry/api/v1alpha1"
+	"github.com/agentregistry-dev/agentregistry/internal/config"
 )
 
 func setupModelTestClient(t *testing.T) client.Client {
@@ -48,7 +49,7 @@ func TestModelHandler_CreateModel(t *testing.T) {
 
 	// Verify the CR was persisted
 	created := &agentregistryv1alpha1.ModelCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "claude-3-opus"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "claude-3-opus", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	assert.Equal(t, "anthropic", created.Spec.Provider)
 	assert.Equal(t, "claude-3-opus-20240229", created.Spec.Model)
@@ -75,7 +76,7 @@ func TestModelHandler_CreateModel_WithBaseURL(t *testing.T) {
 
 	// Verify CR has base URL
 	created := &agentregistryv1alpha1.ModelCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "custom-model"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "custom-model", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	assert.Equal(t, "https://custom-api.example.com/v1", created.Spec.BaseURL)
 }

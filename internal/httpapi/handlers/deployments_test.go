@@ -13,6 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	agentregistryv1alpha1 "github.com/agentregistry-dev/agentregistry/api/v1alpha1"
+	"github.com/agentregistry-dev/agentregistry/internal/config"
 )
 
 func setupDeploymentTestClient(t *testing.T) client.Client {
@@ -47,7 +48,7 @@ func TestDeploymentHandler_CreateDeployment_MCPServer(t *testing.T) {
 
 	// Verify the RegistryDeployment was created
 	var deployments agentregistryv1alpha1.RegistryDeploymentList
-	err = c.List(ctx, &deployments)
+	err = c.List(ctx, &deployments, client.InNamespace(config.GetNamespace()))
 	require.NoError(t, err)
 	assert.Len(t, deployments.Items, 1)
 	assert.Equal(t, "test-server", deployments.Items[0].Spec.ResourceName)
@@ -73,7 +74,7 @@ func TestDeploymentHandler_CreateDeployment_Agent(t *testing.T) {
 
 	// Verify creation
 	var deployments agentregistryv1alpha1.RegistryDeploymentList
-	err = c.List(ctx, &deployments)
+	err = c.List(ctx, &deployments, client.InNamespace(config.GetNamespace()))
 	require.NoError(t, err)
 	assert.Len(t, deployments.Items, 1)
 	assert.Equal(t, agentregistryv1alpha1.ResourceTypeAgent, deployments.Items[0].Spec.ResourceType)
@@ -98,7 +99,7 @@ func TestDeploymentHandler_CreateDeployment_PreferRemote(t *testing.T) {
 
 	// Verify PreferRemote flag in RegistryDeployment
 	var deployments agentregistryv1alpha1.RegistryDeploymentList
-	err = c.List(ctx, &deployments)
+	err = c.List(ctx, &deployments, client.InNamespace(config.GetNamespace()))
 	require.NoError(t, err)
 	assert.Len(t, deployments.Items, 1)
 	assert.True(t, deployments.Items[0].Spec.PreferRemote)

@@ -1,0 +1,25 @@
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: gemini-agent
+  namespace: agentregistry
+  labels:
+    agentregistry.dev/resource-uid: "gemini-agent-dev-1"
+    agentregistry.dev/resource-name: "gemini-agent"
+    agentregistry.dev/resource-version: "1"
+    agentregistry.dev/resource-environment: "dev"
+    agentregistry.dev/resource-source: "manual"
+spec:
+  name: gemini-agent
+  version: "1.0.0"
+  title: "Gemini 2.0 Flash Agent"
+  description: "An AI agent powered by Google's Gemini 2.0 Flash model."
+  image: "ghcr.io/google-gemini/gemini-agent:latest"
+  framework: "genkit"
+  language: "python"
+  modelProvider: "google"
+  modelName: "gemini-2.0-flash"
+  modelConfigRef: "gemini"
+  tools:
+    - type: "McpServer"
+      name: "filesystem"

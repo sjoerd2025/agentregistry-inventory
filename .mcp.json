@@ -1,11 +1,11 @@
 {
   "mcpServers": {
     "agentregistry": {
-      "type": "http",
+      "type": "streamable-http",
       "url": "http://localhost:8083/mcp"
     },
     "open-aware": {
-      "type": "http",
+      "type": "streamable-http",
       "url": "https://open-aware.qodo.ai/mcp"
     },
     "genkit": {

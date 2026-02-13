@@ -13,6 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	agentregistryv1alpha1 "github.com/agentregistry-dev/agentregistry/api/v1alpha1"
+	"github.com/agentregistry-dev/agentregistry/internal/config"
 )
 
 func setupSkillTestClient(t *testing.T) client.Client {
@@ -52,7 +53,7 @@ func TestSkillHandler_CreateSkill(t *testing.T) {
 
 	// Verify the CR was persisted
 	created := &agentregistryv1alpha1.SkillCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "my-skill-1-0-0"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "my-skill-1-0-0", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	assert.Equal(t, "My Skill", created.Spec.Title)
 	assert.Equal(t, "data-processing", created.Spec.Category)
@@ -83,7 +84,7 @@ func TestSkillHandler_CreateSkill_WithRepository(t *testing.T) {
 
 	// Verify CR has repository
 	created := &agentregistryv1alpha1.SkillCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "repo-skill-2-0-0"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "repo-skill-2-0-0", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	require.NotNil(t, created.Spec.Repository)
 	assert.Equal(t, "https://github.com/org/repo", created.Spec.Repository.URL)
@@ -127,7 +128,7 @@ func TestSkillHandler_CreateSkill_WithPackagesAndRemotes(t *testing.T) {
 
 	// Verify CR
 	created := &agentregistryv1alpha1.SkillCatalog{}
-	err = c.Get(ctx, client.ObjectKey{Name: "pkg-skill-1-0-0"}, created)
+	err = c.Get(ctx, client.ObjectKey{Name: "pkg-skill-1-0-0", Namespace: config.GetNamespace()}, created)
 	require.NoError(t, err)
 	assert.Len(t, created.Spec.Packages, 1)
 	assert.Len(t, created.Spec.Remotes, 1)

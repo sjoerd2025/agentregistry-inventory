@@ -1,0 +1,28 @@
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: sourcebot
+  namespace: agentregistry
+  labels:
+    agentregistry.dev/resource-uid: "sourcebot-dev-1"
+    agentregistry.dev/resource-name: "sourcebot"
+    agentregistry.dev/resource-version: "0.1.0"
+    agentregistry.dev/resource-environment: "dev"
+    agentregistry.dev/resource-source: "manual"
+spec:
+  name: sourcebot
+  version: "0.1.0"
+  title: "Sourcebot Expert"
+  description: "Expert agent for Sourcebot development, code search optimization, and self-hosted deployment. Specialized in Next.js, Node.js, Go/Zoekt, and Prisma."
+  repository:
+    url: "https://github.com/sourcebot-dev/sourcebot"
+    source: github
+  framework: "genkit"
+  language: "typescript"
+  modelProvider: "google"
+  modelName: "gemini-2.0-flash"
+  tools:
+    - type: "McpServer"
+      name: "filesystem"
+    - type: "McpServer"
+      name: "git"

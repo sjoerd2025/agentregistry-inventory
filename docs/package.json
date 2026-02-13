@@ -1,0 +1,18 @@
+{
+  "name": "agentregistry-docs",
+  "version": "1.0.0",
+  "description": "Documentation for Agent Registry",
+  "main": "index.js",
+  "scripts": {
+    "docs:build": "honkit build ./ ./_book",
+    "docs:serve": "honkit serve ./"
+  },
+  "dependencies": {
+    "honkit": "^6.0.0",
+    "gitbook-plugin-search-pro": "^2.0.2",
+    "gitbook-plugin-chapter-fold": "^0.0.4",
+    "gitbook-plugin-expandable-chapters": "^0.2.0",
+    "gitbook-plugin-back-to-top-button": "^0.1.4",
+    "gitbook-plugin-copy-code-button": "^0.0.2"
+  }
+}

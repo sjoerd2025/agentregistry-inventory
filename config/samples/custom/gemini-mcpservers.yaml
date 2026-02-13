@@ -1,0 +1,185 @@
+# Custom MCP Server Registry entries based on actual Gemini CLI setup
+# Apply with: kubectl apply -f config/samples/custom/gemini-mcpservers.yaml
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: genkit-server-prod-v1.28.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: genkit-mcp-server
+    agentregistry.dev/resource-version: "1.28.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: genkit-mcp-server
+  version: "1.28.0"
+  title: "Genkit MCP Server"
+  description: "Firebase Genkit AI framework integration — provides flow execution, runtime management, and documentation lookup for building AI features with Genkit."
+  websiteUrl: https://firebase.google.com/docs/genkit
+  repository:
+    url: https://github.com/firebase/genkit
+    source: github
+  packages:
+    - identifier: "genkit-cli"
+      registryType: npm
+      version: "^1.28.0"
+      transport:
+        type: stdio
+  _meta:
+    io.modelcontextprotocol.registry/publisher-provided:
+      aregistry.ai/metadata:
+        identity:
+          org_is_verified: true
+          publisher_identity_verified_by_jwt: true
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: linear-server-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: linear-mcp-server
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: linear-mcp-server
+  version: "1.0.0"
+  title: "Linear MCP Server"
+  description: "Linear project management integration — create/update issues, manage projects, track cycles, and sync status updates directly from AI agents."
+  websiteUrl: https://linear.app
+  remotes:
+    - type: streamable-http
+      url: https://mcp.linear.app/sse
+  _meta:
+    io.modelcontextprotocol.registry/publisher-provided:
+      aregistry.ai/metadata:
+        identity:
+          org_is_verified: true
+          publisher_identity_verified_by_jwt: true
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: firebase-server-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: firebase-mcp-server
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: firebase-mcp-server
+  version: "1.0.0"
+  title: "Firebase MCP Server"
+  description: "Firebase platform integration — manage projects, apps, Firestore, Authentication, Hosting, and deploy with the Firebase CLI."
+  websiteUrl: https://firebase.google.com
+  repository:
+    url: https://github.com/firebase/firebase-tools
+    source: github
+  packages:
+    - identifier: "firebase-tools"
+      registryType: npm
+      version: "latest"
+      transport:
+        type: stdio
+  _meta:
+    io.modelcontextprotocol.registry/publisher-provided:
+      aregistry.ai/metadata:
+        identity:
+          org_is_verified: true
+          publisher_identity_verified_by_jwt: true
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: gke-server-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: gke-oss-mcp-server
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: gke-oss-mcp-server
+  version: "1.0.0"
+  title: "GKE MCP Server"
+  description: "Google Kubernetes Engine management — create/list/describe clusters, deploy workloads, query logs, manage kubeconfig, and get recommendations."
+  websiteUrl: https://cloud.google.com/kubernetes-engine
+  repository:
+    url: https://github.com/GoogleCloudPlatform/gke-mcp
+    source: github
+  packages:
+    - identifier: "github.com/GoogleCloudPlatform/gke-mcp"
+      registryType: go
+      version: "latest"
+      transport:
+        type: stdio
+  _meta:
+    io.modelcontextprotocol.registry/publisher-provided:
+      aregistry.ai/metadata:
+        identity:
+          org_is_verified: true
+          publisher_identity_verified_by_jwt: true
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: prisma-server-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: prisma-mcp-server
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: prisma-mcp-server
+  version: "1.0.0"
+  title: "Prisma MCP Server"
+  description: "Prisma ORM integration — manage database schemas, run migrations, inspect data with Prisma Studio, and handle database lifecycle operations."
+  websiteUrl: https://www.prisma.io
+  repository:
+    url: https://github.com/prisma/prisma
+    source: github
+  packages:
+    - identifier: "@prisma/mcp-server"
+      registryType: npm
+      version: "latest"
+      transport:
+        type: stdio
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: MCPServerCatalog
+metadata:
+  name: cloudrun-server-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: cloudrun-mcp-server
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: cloudrun-mcp-server
+  version: "1.0.0"
+  title: "Cloud Run MCP Server"
+  description: "Google Cloud Run integration — deploy container images, local folders, and file contents as serverless services with automatic scaling and HTTPS endpoints."
+  websiteUrl: https://cloud.google.com/run
+  packages:
+    - identifier: "@google-cloud/gemini-cloud-assist-mcp"
+      registryType: npm
+      version: "latest"
+      transport:
+        type: stdio
+  _meta:
+    io.modelcontextprotocol.registry/publisher-provided:
+      aregistry.ai/metadata:
+        identity:
+          org_is_verified: true
+          publisher_identity_verified_by_jwt: true

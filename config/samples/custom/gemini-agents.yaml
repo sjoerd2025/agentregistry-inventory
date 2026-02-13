@@ -1,0 +1,157 @@
+# Custom Agent Registry entries for Gemini CLI agents
+# Apply with: kubectl apply -f config/samples/custom/gemini-agents.yaml
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: code-architect-agent-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: code-architect
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: code-architect
+  version: "1.0.0"
+  title: "Code Architect Agent"
+  description: "Senior architecture agent that analyzes codebases, proposes scalable designs, and generates implementation plans following SOLID principles and clean architecture patterns."
+  image: ghcr.io/sjoerd2025/code-architect-agent:1.0.0
+  framework: adk
+  language: python
+  modelProvider: gemini
+  modelName: gemini-2.5-flash
+  agentType: Declarative
+  systemMessage: |
+    You are a senior software architect. Analyze codebases for architecture quality,
+    propose scalable designs, and generate step-by-step implementation plans.
+    Follow SOLID principles, clean architecture, and domain-driven design patterns.
+  websiteUrl: https://github.com/sjoerd2025/agentregistry-inventory
+  repository:
+    url: https://github.com/sjoerd2025/agentregistry-inventory
+    source: github
+  tools:
+    - type: McpServer
+      name: filesystem-server
+      toolNames: ["read_file", "write_file", "list_directory"]
+    - type: McpServer
+      name: github-server
+      toolNames: ["search_code", "get_file_contents"]
+  skills:
+    - "code-review"
+    - "architecture-analysis"
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: debugger-agent-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: debugger
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: debugger
+  version: "1.0.0"
+  title: "Debugger Agent"
+  description: "Intelligent debugging agent that traces errors, analyzes stack traces, proposes fixes, and validates solutions through test-driven debugging workflows."
+  image: ghcr.io/sjoerd2025/debugger-agent:1.0.0
+  framework: adk
+  language: python
+  modelProvider: gemini
+  modelName: gemini-2.5-flash
+  agentType: Declarative
+  systemMessage: |
+    You are an expert debugger. Trace errors through stack traces,
+    analyze root causes, propose fixes, and validate them through test execution.
+    Always explain your reasoning and provide minimal, targeted fixes.
+  repository:
+    url: https://github.com/sjoerd2025/agentregistry-inventory
+    source: github
+  tools:
+    - type: McpServer
+      name: filesystem-server
+    - type: Agent
+      name: code-architect
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: fullstack-architect-agent-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: fullstack-architect
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: fullstack-architect
+  version: "1.0.0"
+  title: "Full Stack Architect Agent"
+  description: "End-to-end full-stack agent that designs and implements frontend (React/Next.js), backend (Go/Node.js), and infrastructure (K8s/Cloud Run) solutions with integrated CI/CD."
+  image: ghcr.io/sjoerd2025/fullstack-architect-agent:1.0.0
+  framework: adk
+  language: typescript
+  modelProvider: anthropic
+  modelName: claude-sonnet-4-20250514
+  agentType: Declarative
+  systemMessage: |
+    You are a full-stack architect. Design and implement complete solutions
+    spanning frontend, backend, and infrastructure. Use modern best practices
+    for React/Next.js, Go/Node.js backends, and Kubernetes deployments.
+  repository:
+    url: https://github.com/sjoerd2025/agentregistry-inventory
+    source: github
+  tools:
+    - type: McpServer
+      name: filesystem-server
+    - type: McpServer
+      name: github-server
+    - type: Agent
+      name: code-architect
+    - type: Agent
+      name: debugger
+  skills:
+    - "react-frontend"
+    - "kubernetes-deploy"
+    - "ci-cd-pipeline"
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: AgentCatalog
+metadata:
+  name: devops-automator-agent-prod-v0.9.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: devops-automator
+    agentregistry.dev/resource-version: "0.9.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: devops-automator
+  version: "0.9.0"
+  title: "DevOps Automator Agent"
+  description: "Infrastructure-as-code agent that manages GKE clusters, Cloud Run services, CI/CD pipelines, and monitoring stack with Terraform and Helm."
+  image: ghcr.io/sjoerd2025/devops-automator-agent:0.9.0
+  framework: langgraph
+  language: python
+  modelProvider: gemini
+  modelName: gemini-2.5-pro
+  agentType: BYO
+  websiteUrl: https://github.com/sjoerd2025/agentregistry-inventory
+  repository:
+    url: https://github.com/sjoerd2025/agentregistry-inventory
+    source: github
+  tools:
+    - type: McpServer
+      name: gcloud
+    - type: McpServer
+      name: gke-server
+  skills:
+    - "terraform-deploy"
+    - "helm-charts"
+    - "monitoring-setup"

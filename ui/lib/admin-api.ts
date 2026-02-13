@@ -2,12 +2,33 @@
 // This client communicates with the /admin/v0 API endpoints
 
 // Determine API base URL:
-// - NEXT_PUBLIC_API_URL set explicitly → use it (empty string = same origin for static export)
+// - NEXT_PUBLIC_API_URL empty string → same origin (static export mode)
+// - NEXT_PUBLIC_API_URL set to cross-origin URL in browser → use /api/registry proxy
+// - NEXT_PUBLIC_API_URL set to same-origin URL → use it directly
 // - Not set → use /api/registry proxy (Next.js server mode with auth)
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL !== undefined
-    ? process.env.NEXT_PUBLIC_API_URL
-    : "/api/registry"
+const API_BASE_URL = (() => {
+  const configuredUrl = process.env.NEXT_PUBLIC_API_URL
+  if (configuredUrl === undefined) {
+    return "/api/registry"
+  }
+  if (configuredUrl === "") {
+    return ""
+  }
+  if (typeof window === "undefined") {
+    return configuredUrl
+  }
+
+  try {
+    const resolvedUrl = new URL(configuredUrl, window.location.origin)
+    if (resolvedUrl.origin !== window.location.origin) {
+      return "/api/registry"
+    }
+  } catch {
+    return "/api/registry"
+  }
+
+  return configuredUrl
+})()
 
 // Retry configuration
 const DEFAULT_RETRIES = 3
@@ -487,6 +508,30 @@ class AdminApiClient {
     return headers
   }
 
+  private isRegistryPath(pathname: string): boolean {
+    return pathname.startsWith('/admin/') || pathname.startsWith('/v0/') || pathname.startsWith('/v0.1/')
+  }
+
+  // If direct browser calls fail (often CORS/network), retry through Next.js proxy.
+  private getProxyFallbackUrl(url: string): string | null {
+    if (typeof window === 'undefined') {
+      return null
+    }
+
+    try {
+      const parsedUrl = new URL(url, window.location.origin)
+      if (!this.isRegistryPath(parsedUrl.pathname)) {
+        return null
+      }
+      if (parsedUrl.pathname.startsWith('/api/registry/')) {
+        return null
+      }
+      return `/api/registry${parsedUrl.pathname}${parsedUrl.search}`
+    } catch {
+      return null
+    }
+  }
+
   // Fetch with retry logic
   private async fetchWithRetry(
     url: string, 
@@ -514,10 +559,18 @@ class AdminApiClient {
       return this.fetchWithRetry(url, options, attempt + 1)
       
     } catch (error) {
+      const proxyFallbackUrl = this.getProxyFallbackUrl(url)
+      if (proxyFallbackUrl) {
+        console.warn(`Network error calling ${url}, retrying via proxy ${proxyFallbackUrl}`)
+        return this.fetchWithRetry(proxyFallbackUrl, options, attempt)
+      }
+
       // Network errors should be retried
       if (attempt >= this.retries) {
-        console.error(`Fetch failed after ${this.retries} retries:`, error)
-        throw error
+        const details = error instanceof Error ? error.message : String(error)
+        const message = `Network request failed for ${url}: ${details}. Verify the API is reachable and CORS allows this origin.`
+        console.error(`Fetch failed after ${this.retries} retries: ${message}`)
+        throw new Error(message)
       }
       
       const backoff = calculateBackoff(attempt, this.retryDelay)

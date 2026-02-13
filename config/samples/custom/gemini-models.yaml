@@ -1,0 +1,50 @@
+# Custom Model Registry entries for AI models used by Gemini CLI agents
+# Apply with: kubectl apply -f config/samples/custom/gemini-models.yaml
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: ModelCatalog
+metadata:
+  name: gemini-2-5-flash-prod
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: gemini-2-5-flash
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: gemini-2-5-flash
+  provider: Gemini
+  model: gemini-2.5-flash
+  description: "Google Gemini 2.5 Flash — fast, efficient model for code generation, analysis, and multi-turn conversations. Optimal cost-performance ratio."
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: ModelCatalog
+metadata:
+  name: gemini-2-5-pro-prod
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: gemini-2-5-pro
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: gemini-2-5-pro
+  provider: GeminiVertexAI
+  model: gemini-2.5-pro
+  description: "Google Gemini 2.5 Pro — highest capability model for complex reasoning, architecture design, and multi-step planning tasks."
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: ModelCatalog
+metadata:
+  name: claude-sonnet-4-prod
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: claude-sonnet-4
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: claude-sonnet-4
+  provider: Anthropic
+  model: claude-sonnet-4-20250514
+  description: "Anthropic Claude Sonnet 4 — strong reasoning and coding model with extended context and tool-use capabilities."

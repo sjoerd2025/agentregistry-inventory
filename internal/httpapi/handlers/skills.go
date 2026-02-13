@@ -15,6 +15,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	agentregistryv1alpha1 "github.com/agentregistry-dev/agentregistry/api/v1alpha1"
+	"github.com/agentregistry-dev/agentregistry/internal/config"
 	"github.com/agentregistry-dev/agentregistry/internal/controller"
 )
 
@@ -298,7 +299,8 @@ func (h *SkillHandler) createSkill(ctx context.Context, input *CreateSkillInput)
 
 	skill := &agentregistryv1alpha1.SkillCatalog{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: crName,
+			Name:      crName,
+			Namespace: config.GetNamespace(),
 			Labels: map[string]string{
 				"agentregistry.dev/name":    SanitizeK8sName(input.Body.Name),
 				"agentregistry.dev/version": SanitizeK8sName(input.Body.Version),

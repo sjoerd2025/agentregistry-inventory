@@ -141,3 +141,11 @@ defer helper.Cleanup(t)
 - **Go**: 1.25+
 - **Node.js**: 18+
 - **Kubernetes**: 1.27+
+
+<genkit_prompts hash="7615382f">
+<!-- Genkit Context - Auto-generated, do not edit -->
+
+Genkit Framework Instructions:
+ - @./GENKIT.md
+
+</genkit_prompts>

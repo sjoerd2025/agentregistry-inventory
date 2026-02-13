@@ -3,6 +3,17 @@
     "agentregistry": {
       "type": "http",
       "url": "http://localhost:8083/mcp"
+    },
+    "open-aware": {
+      "type": "http",
+      "url": "https://open-aware.qodo.ai/mcp"
+    },
+    "genkit": {
+      "command": "genkit",
+      "args": [
+        "mcp",
+        "--no-update-notification"
+      ]
     }
   }
 }

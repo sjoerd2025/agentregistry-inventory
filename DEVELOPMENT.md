@@ -218,6 +218,7 @@ make build
 
 Uses [ko](https://ko.build/) for building container images:
 
+
 ```bash
 # Build controller image locally
 make image

@@ -1,0 +1,107 @@
+# Custom Skill Registry entries for Gemini CLI skills
+# Apply with: kubectl apply -f config/samples/custom/gemini-skills.yaml
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: SkillCatalog
+metadata:
+  name: playwright-skill-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: playwright-skill
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: playwright-skill
+  version: "1.0.0"
+  title: "Playwright Browser Automation"
+  category: testing
+  description: "End-to-end browser testing and automation skill using Playwright. Supports screenshot capture, DOM interaction, and visual regression testing."
+  websiteUrl: https://playwright.dev
+  repository:
+    url: https://github.com/microsoft/playwright
+    source: github
+  packages:
+    - identifier: playwright-mcp
+      registryType: npm
+      version: "latest"
+      transport:
+        type: stdio
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: SkillCatalog
+metadata:
+  name: cloudflare-deploy-skill-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: cloudflare-deploy
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: cloudflare-deploy
+  version: "1.0.0"
+  title: "Cloudflare Deployment"
+  category: deployment
+  description: "Deploy applications to Cloudflare Workers and Pages. Supports edge functions, static sites, and full-stack Next.js applications."
+  websiteUrl: https://developers.cloudflare.com
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: SkillCatalog
+metadata:
+  name: security-threat-model-skill-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: security-threat-model
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: security-threat-model
+  version: "1.0.0"
+  title: "Security Threat Modeling"
+  category: security
+  description: "Automated threat modeling and security analysis. Identifies attack surfaces, generates STRIDE models, and produces security recommendations."
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: SkillCatalog
+metadata:
+  name: figma-implement-skill-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: figma-implement-design
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: figma-implement-design
+  version: "1.0.0"
+  title: "Figma Design Implementation"
+  category: frontend
+  description: "Convert Figma designs to pixel-perfect React/HTML/CSS implementations. Extracts design tokens, component structures, and generates responsive code."
+  websiteUrl: https://figma.com
+---
+apiVersion: agentregistry.dev/v1alpha1
+kind: SkillCatalog
+metadata:
+  name: pr-creator-skill-prod-v1.0.0
+  namespace: agentregistry
+  labels:
+    environment: prod
+    agentregistry.dev/resource-name: pr-creator
+    agentregistry.dev/resource-version: "1.0.0"
+    agentregistry.dev/resource-environment: prod
+    agentregistry.dev/resource-source: manual
+spec:
+  name: pr-creator
+  version: "1.0.0"
+  title: "Pull Request Creator"
+  category: development
+  description: "Automated PR creation skill that generates descriptive titles, comprehensive descriptions, labels, and review assignments following conventional commit standards."
+  repository:
+    url: https://github.com/sjoerd2025/agentregistry-inventory
+    source: github

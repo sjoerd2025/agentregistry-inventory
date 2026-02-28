@@ -9,7 +9,7 @@ require (
 	github.com/kagent-dev/kagent/go v0.0.0-20251107200645-686008ea62ac
 	github.com/kagent-dev/kmcp v0.2.2
 	github.com/mark3labs/mcp-go v0.43.2
-	github.com/modelcontextprotocol/go-sdk v0.7.0
+	github.com/modelcontextprotocol/go-sdk v1.3.1
 	github.com/modelcontextprotocol/registry v1.3.7
 	github.com/rs/cors v1.11.1
 	github.com/rs/zerolog v1.34.0
@@ -54,7 +54,7 @@ require (
 	github.com/google/btree v1.1.3 // indirect
 	github.com/google/gnostic-models v0.7.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/jsonschema-go v0.3.0 // indirect
+	github.com/google/jsonschema-go v0.4.2 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.11 // indirect
@@ -80,6 +80,7 @@ require (
 	github.com/prometheus/common v0.66.1 // indirect
 	github.com/prometheus/procfs v0.17.0 // indirect
 	github.com/segmentio/asm v1.2.1 // indirect
+	github.com/segmentio/encoding v0.5.3 // indirect
 	github.com/spf13/cast v1.10.0 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.9-0.20240815153524-6ea36470d1bd // indirect
